@@ -17,7 +17,7 @@ class PlayerKylo:
         #self.kings = ["F_King", "M_King", "S_King", "D_King"]
         #self.princes = ["F_Prince", "M_Prince", "S_Prince", "D_Prince"]
         #self.knights = ["F_Knight", "M_Knight", "S_Knight", "D_Knight"]
-        self.kings =   ["King", "King", "King", "King"]
+        self.kings = ["King", "King", "King", "King"]
         self.princes = ["Prince", "Prince", "Prince", "Prince"]
         self.knights = ["Knight", "Knight", "Knight", "Knight"]
 
@@ -153,17 +153,130 @@ class Table:
         playerid = 0
         playerindex = self.playerindex
 
+        cardcount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        cardpoints = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+        x = 0
+        highcard = "..."
+
         while playerid < len(playerindex):
             playerchanging = playerindex[playerid]
-            clasd = 0
-            i=0
+            ontrial = playerchanging.hand
 
-            if playerchanging.hand[i] == "King":
-                if playerchanging.hand[i+1] == playerchanging.hand[i] and playerchanging.hand[i+2] == playerchanging.hand[i]:
-                    clasd = 1
-                    break
-                elif playerchanging.hand == 3:
-                    clasd = 2
+            while x < len(playerchanging.hand):
+                match playerchanging.hand[x]:
+                    case "King":
+                        cardcount[0] +=1
+                        x += 1
+                    case "Prince":
+                        cardcount[1] += 1
+                        x += 1
+                    case "Knight":
+                        cardcount[2] += 1
+                        x += 1
+                    case "7":
+                        cardcount[3] += 1
+                        x += 1
+                    case "6":
+                        cardcount[4] += 1
+                        x += 1
+                    case "5":
+                        cardcount[5] += 1
+                        x += 1
+                    case "4":
+                        cardcount[6] += 1
+                        x += 1
+                    case "3":
+                        cardcount[7] += 1
+                        x += 1
+                    case "2":
+                        cardcount[8] += 1
+                        x += 1
+                    case "1":
+                        cardcount[9] += 1
+                        x += 1
+                    case "Assassin":
+                        cardcount[10] += 1
+                        x += 1
+                    case "Thief":
+                        cardcount[10] += 1
+                        x += 1
+            print(playerchanging.name, "cards: ", cardcount)
+            x = 0
+            while x < len(cardcount) - 1:
+                match cardcount[x]:
+                    case 3 | 4:
+                        match x:
+                            case 0:
+                                highcard = "Kings"
+                            case 1:
+                                highcard = "Princes"
+                            case 2:
+                                highcard = "Knights"
+                            case 3:
+                                highcard = "7's"
+                            case 4:
+                                highcard = "6's"
+                            case 5:
+                                highcard = "5's"
+                            case 6:
+                                highcard = "4's"
+                            case 7:
+                                highcard = "3's"
+                            case 8:
+                                highcard = "2's"
+                            case 9:
+                                highcard = "1's"
+                        print("--Player has Trip-", highcard)
+                    case 2:
+                        match x:
+                            case 0:
+                                highcard = "Kings"
+                            case 1:
+                                highcard = "Princes"
+                            case 2:
+                                highcard = "Knights"
+                            case 3:
+                                highcard = "7's"
+                            case 4:
+                                highcard = "6's"
+                            case 5:
+                                highcard = "5's"
+                            case 6:
+                                highcard = "4's"
+                            case 7:
+                                highcard = "3's"
+                            case 8:
+                                highcard = "2's"
+                            case 9:
+                                highcard = "1's"
+                        print("---Player has a pair of ", highcard)
+                x += 1
+
+            x = 0
+            while x < len(cardcount) - 4:
+                if x == 0:
+                    if cardcount[x] > 0:
+                        if cardcount[x+1] > 0:
+                            if cardcount[x+2] > 0:
+                                print("****ROYAL STRAIGHT FOUND*")
+                                break
+                elif x > 2:
+                    if cardcount[x] > 0:
+                        if cardcount[x+1] > 0:
+                            if cardcount[x+2] > 0:
+                                print("****NUMBERED STRAIGHT FOUND*")
+                                break
+                x+=1
+            playerid +=1
+            x = 0
+            cardcount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+
+
+
+
+
+
 
 
 
@@ -186,7 +299,7 @@ class Player:
             while i < len(self.hand):
                 if newhandpos >= 4:
                     break
-                elif self.hand[i] == "F_King" or self.hand[i] == "M_King" or self.hand[i] == "S_King" or self.hand[i] == "D_King":
+                elif self.hand[i] == "King" or self.hand[i] == "King" or self.hand[i] == "King" or self.hand[i] == "King":
                     newhand[newhandpos] = self.hand[i]
                     self.hand[i] = ""
                     i = 0
@@ -197,7 +310,7 @@ class Player:
             while i < len(self.hand):
                 if newhandpos >= len(newhand):
                     break
-                elif self.hand[i] == "F_Prince" or self.hand[i] == "M_Prince" or self.hand[i] == "S_Prince" or self.hand[i] == "D_Prince":
+                elif self.hand[i] == "Prince" or self.hand[i] == "Prince" or self.hand[i] == "Prince" or self.hand[i] == "Prince":
                     newhand[newhandpos] = self.hand[i]
                     self.hand[i] = ""
                     i = 0
@@ -208,7 +321,7 @@ class Player:
             while i < len(self.hand):
                 if newhandpos >= len(newhand):
                     break
-                elif self.hand[i] == "F_Knight" or self.hand[i] == "M_Knight" or self.hand[i] == "S_Knight" or self.hand[i] == "D_Knight":
+                elif self.hand[i] == "Knight" or self.hand[i] == "Knight" or self.hand[i] == "Knight" or self.hand[i] == "Knight":
                     newhand[newhandpos] = self.hand[i]
                     self.hand[i] = ""
                     i = 0
@@ -260,7 +373,7 @@ class CommunityCards:
             while i < len(self.hand):
                 if newhandpos >= 3:
                     break
-                elif self.hand[i] == "F_King" or self.hand[i] == "M_King" or self.hand[i] == "S_King" or self.hand[i] == "D_King":
+                elif self.hand[i] == "King" or self.hand[i] == "King" or self.hand[i] == "King" or self.hand[i] == "King":
                     newhand[newhandpos] = self.hand[i]
                     self.hand[i] = ""
                     i = 0
@@ -271,7 +384,7 @@ class CommunityCards:
             while i < len(self.hand):
                 if newhandpos >= 3:
                     break
-                elif self.hand[i] == "F_Prince" or self.hand[i] == "M_Prince" or self.hand[i] == "S_Prince" or self.hand[i] == "D_Prince":
+                elif self.hand[i] == "Prince" or self.hand[i] == "Prince" or self.hand[i] == "Prince" or self.hand[i] == "Prince":
                     newhand[newhandpos] = self.hand[i]
                     self.hand[i] = ""
                     i = 0
@@ -282,7 +395,7 @@ class CommunityCards:
             while i < len(self.hand):
                 if newhandpos >= len(newhand):
                     break
-                elif self.hand[i] == "F_Knight" or self.hand[i] == "M_Knight" or self.hand[i] == "S_Knight" or self.hand[i] == "D_Knight":
+                elif self.hand[i] == "Knight" or self.hand[i] == "Knight" or self.hand[i] == "Knight" or self.hand[i] == "Knight":
                     newhand[newhandpos] = self.hand[i]
                     self.hand[i] = ""
                     i = 0

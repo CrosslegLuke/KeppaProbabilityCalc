@@ -177,3 +177,5 @@ print(player5.name, "'s hand: ", player5.hand)
 print(player6.name, "'s hand: ", player6.hand)
 print(player7.name, "'s hand: ", player7.hand)
 print(player8.name, "'s hand: ", player8.hand)
+
+table.rate_hands()
