@@ -116,7 +116,8 @@ class PlayerKylo:
             rankused = random.randrange(0, 11)
             numberofattempts+=1
 
-        print("shuffler ran: ", numberofattempts, " times!")
+
+        #print("shuffler ran: ", numberofattempts, " times!")
         return shuffled_deck
 
 
@@ -149,7 +150,7 @@ class Table:
             playerindex[playerid] = playerchanging
             playerid +=1
 
-    def rate_hands(self):
+    def rate_hands(self, HandsDict):
         playerid = 0
         playerindex = self.playerindex
 
@@ -200,7 +201,7 @@ class Table:
                     case "Thief":
                         cardcount[10] += 1
                         x += 1
-            print(playerchanging.name, "cards: ", cardcount)
+            #print(playerchanging.name, "cards: ", cardcount)
             x = 0
             while x < len(cardcount) - 1:
                 match cardcount[x]:
@@ -208,48 +209,94 @@ class Table:
                         match x:
                             case 0:
                                 highcard = "Kings"
+                                HandsDict["TKings"] += 1
+                                HandsDict["AllTrips"] += 1
+                                HandsDict["AllRoyalTrips"] += 1
                             case 1:
                                 highcard = "Princes"
+                                HandsDict["TPrinces"] += 1
+                                HandsDict["AllTrips"] += 1
+                                HandsDict["AllRoyalTrips"] += 1
                             case 2:
                                 highcard = "Knights"
+                                HandsDict["TKnights"] += 1
+                                HandsDict["AllTrips"] += 1
+                                HandsDict["AllRoyalTrips"] += 1
                             case 3:
                                 highcard = "7's"
+                                HandsDict["T7s"] += 1
+                                HandsDict["AllTrips"] += 1
                             case 4:
                                 highcard = "6's"
+                                HandsDict["T6s"] += 1
+                                HandsDict["AllTrips"] += 1
                             case 5:
                                 highcard = "5's"
+                                HandsDict["Trips"] += 1
+                                HandsDict["AllTrips"] += 1
                             case 6:
                                 highcard = "4's"
+                                HandsDict["Trips"] += 1
+                                HandsDict["AllTrips"] += 1
                             case 7:
                                 highcard = "3's"
+                                HandsDict["Trips"] += 1
+                                HandsDict["AllTrips"] += 1
                             case 8:
                                 highcard = "2's"
+                                HandsDict["Trips"] += 1
+                                HandsDict["AllTrips"] += 1
                             case 9:
                                 highcard = "1's"
-                        print("--Player has Trip-", highcard)
+                                HandsDict["Trips"] += 1
+                                HandsDict["AllTrips"] += 1
+                        #print("--Player has Trip-", highcard)
                     case 2:
                         match x:
                             case 0:
                                 highcard = "Kings"
+                                HandsDict["DKings"] += 1
+                                HandsDict["AllRoyalPairs"] += 1
+                                HandsDict["AllPairs"] += 1
                             case 1:
                                 highcard = "Princes"
+                                HandsDict["DPrinces"] += 1
+                                HandsDict["AllRoyalPairs"] += 1
+                                HandsDict["AllPairs"] += 1
                             case 2:
                                 highcard = "Knights"
+                                HandsDict["DKnights"] += 1
+                                HandsDict["AllRoyalPairs"] += 1
+                                HandsDict["AllPairs"] += 1
                             case 3:
                                 highcard = "7's"
+                                HandsDict["NumPairs"] += 1
+                                HandsDict["AllPairs"] += 1
                             case 4:
                                 highcard = "6's"
+                                HandsDict["NumPairs"] += 1
+                                HandsDict["AllPairs"] += 1
                             case 5:
                                 highcard = "5's"
+                                HandsDict["NumPairs"] += 1
+                                HandsDict["AllPairs"] += 1
                             case 6:
                                 highcard = "4's"
+                                HandsDict["NumPairs"] += 1
+                                HandsDict["AllPairs"] += 1
                             case 7:
                                 highcard = "3's"
+                                HandsDict["NumPairs"] += 1
+                                HandsDict["AllPairs"] += 1
                             case 8:
                                 highcard = "2's"
+                                HandsDict["NumPairs"] += 1
+                                HandsDict["AllPairs"] += 1
                             case 9:
                                 highcard = "1's"
-                        print("---Player has a pair of ", highcard)
+                                HandsDict["NumPairs"] += 1
+                                HandsDict["AllPairs"] += 1
+                        #print("---Player has a pair of ", highcard)
                 x += 1
 
             x = 0
@@ -258,27 +305,22 @@ class Table:
                     if cardcount[x] > 0:
                         if cardcount[x+1] > 0:
                             if cardcount[x+2] > 0:
-                                print("****ROYAL STRAIGHT FOUND*")
+                                #print("****ROYAL STRAIGHT FOUND*")
+                                HandsDict["RStr"] += 1
+                                HandsDict["AllStraights"] += 1
                                 break
                 elif x > 2:
                     if cardcount[x] > 0:
                         if cardcount[x+1] > 0:
                             if cardcount[x+2] > 0:
-                                print("****NUMBERED STRAIGHT FOUND*")
+                                #print("****NUMBERED STRAIGHT FOUND*")
+                                HandsDict["NumStr"] += 1
+                                HandsDict["AllStraights"] += 1
                                 break
-                x+=1
-            playerid +=1
+                x += 1
+            playerid += 1
             x = 0
             cardcount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-
-
-
-
-
-
-
-
 
 
 class Player:
